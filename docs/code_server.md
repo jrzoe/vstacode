@@ -52,3 +52,14 @@ Upon accessing for the first time, I think there's a process for setting a passw
 
 General workflow is to start a `tmux` session from the head node, request an interactive job from within that session, and then run the `run_vsc_sing.sh` script from within the interactive job. Tunnel into the server from you local machine with the provided `ssh` command, 
 
+## Using GitHub Copilot within code-server
+
+GitHub Copilot is a very helpful LLM-based coding assistant that can help you write code faster. Unlike chatbots, this is integrated directly into your coding environment. At BCM, students and possibly some staff can get free access to GitHub Copilot Pro through [GitHub Education](https://github.com/education). GitHub Copilot Pro  provides access to better models, some of which offer unlimited usage. It's incredibly handy, so be sure to sign up if you're eligible!
+
+Normally, GitHub Copilot can be used within a local VS Code client by installing the GitHub Copilot extension from the extension marketplace. However, I believe only open-source extensions are found in the extension marketplace for code-server instances, so the GitHub Copilot extension is not available there. There is a workaround:
+
+1. Download the VSIX file for the GitHub Copilot extension from a browser on your local machine [here](https://marketplace.visualstudio.com/_apis/public/gallery/publishers/GitHub/vsextensions/copilot/latest/vspackage). Of note, you can't download with `curl` directly onto Taco - the downloaded VSIX file won't be valid, I'm not sure why.
+2. Transfer the VSIX file to Taco, e.g. with `scp` or `rsync`.
+3. Install the VSIX file within your code-server instance. To do this, navigate to the Extensions tab, click the three-dot menu at the top, and select "Install from VSIX...". Then, navigate to the location of the VSIX file you transferred to Taco and select it. You will then be prompted to sign in to your GitHub account to authorize the extension. After installation, the VSIX file can be deleted.
+
+Of note, the agent mode of GitHub Copilot doesn't work within code-server which is a major bummer, but the standard inline code suggestions and chat features are still incredibly helpful.
