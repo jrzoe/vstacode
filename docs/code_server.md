@@ -58,7 +58,7 @@ GitHub Copilot is a very helpful LLM-based coding assistant that can help you wr
 
 Normally, GitHub Copilot can be used within a local VS Code client by installing the GitHub Copilot extension from the extension marketplace. However, I believe only open-source extensions are found in the extension marketplace for code-server instances, so the GitHub Copilot extension is not available there. There is a workaround:
 
-1. Download the VSIX file for the GitHub Copilot extension from a browser on your local machine [here](https://marketplace.visualstudio.com/_apis/public/gallery/publishers/GitHub/vsextensions/copilot/latest/vspackage). Of note, you can't download with `curl` directly onto Taco - the downloaded VSIX file won't be valid, I'm not sure why.
+1. Download the VSIX files for the [GitHub Copilot](https://marketplace.visualstudio.com/_apis/public/gallery/publishers/GitHub/vsextensions/copilot/latest/vspackage) and [GitHub Copilot Chat](https://marketplace.visualstudio.com/_apis/public/gallery/publishers/GitHub/vsextensions/copilot-chat/latest/vspackage) extensions from a browser on your local machine. Clinking the hyperlinks will automatically download them. Of note, you can't download with `curl` directly onto Taco - the downloaded VSIX file won't be valid, I'm not sure why.
 2. Transfer the VSIX file to Taco, e.g. with `scp` or `rsync`.
 3. Install the VSIX file within your code-server instance. To do this, navigate to the Extensions tab, click the three-dot menu at the top, and select "Install from VSIX...". Then, navigate to the location of the VSIX file you transferred to Taco and select it. You will then be prompted to sign in to your GitHub account to authorize the extension. After installation, the VSIX file can be deleted.
 
