@@ -1,16 +1,15 @@
-# Tips for working on Taco
+# Workflow tips for bioinformaticians and computational biologists
 
-I initally made this repo as a resource for those who may want to use VS Code when working interactively on BCM's MHGCP, aka Taco. I decided to expand this to include some other helpful tips for working on Taco/high-performance computing (HPC) systems in general. 
+I initally made this repo as a resource for colleagues at BCM who had expressed interest in using VS Code when working interactively on a large compute cluster nicknames Taco (hence the repo name). Over the course of my PhD, I've often worked on a team across projects, and in doing so, I've come across some workflow barriers that I suspect are common to many computational biologists and/or bioinformaticians working in academia. I decided to expand this repo to include some suggested workflow tips across a few topics, linked below. 
 
 ## Topics
 
-- [Using VS Code on Taco via code-server](./docs/code_server.md)
+- [Using VS Code on a compute cluster via code-server](./docs/code_server.md)
 
 ## TODO
 
 Some things I'll add to this repo:
 
-- Instructions for getting GitHub Copilot working within your code-server instance
 - Adding aliases for tunneling command rather than copying/pasting them (helpful if the command gets lost in your terminal history).
 - Helpful tips on config for code-server
 - Working with R environments on Taco and within code-server

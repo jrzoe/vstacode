@@ -19,5 +19,6 @@ sleep 1
 #### start code-server from Docker image using Singularity
 singularity run --bind $HOME \
 		--bind /your/path/here \
+                --env PASSWORD=your_password_here \
                 docker://codercom/code-server \
                 --bind-addr $ipnip:$ipnport
