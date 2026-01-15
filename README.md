@@ -5,6 +5,7 @@ I initally made this repo as a resource for colleagues at BCM who had expressed 
 ## Topics
 
 - [Using VS Code on a compute cluster via code-server](./docs/code_server.md)
+- [Source-controlled collaboration on big data projects](./docs/team_source_control.md)
 
 ## TODO
 
