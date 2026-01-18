@@ -57,6 +57,14 @@ GitHub Copilot is a very helpful LLM-based coding assistant that can help you wr
 
 Normally, GitHub Copilot can be used within a local VS Code client by installing the GitHub Copilot extension from the extension marketplace. GitHub Copliot is now open source, but it is not yet hosted on the open source marketplace used by code-server. However, there is a workaround:
 
-1. Download the VSIX files for the [GitHub Copilot](https://marketplace.visualstudio.com/_apis/public/gallery/publishers/GitHub/vsextensions/copilot/latest/vspackage) and [GitHub Copilot Chat](https://marketplace.visualstudio.com/_apis/public/gallery/publishers/GitHub/vsextensions/copilot-chat/latest/vspackage) extensions from a browser on your local machine. Clinking the hyperlinks will automatically download them. Of note, you can't download with `curl` directly onto Taco - the downloaded VSIX file won't be valid, I'm not sure why.
-2. Transfer the VSIX file to Taco, e.g. with `scp` or `rsync`.
-3. Install the VSIX file within your code-server instance. To do this, navigate to the Extensions tab, click the three-dot menu at the top, and select "Install from VSIX...". Then, navigate to the location of the VSIX file you transferred to Taco and select it. You will then be prompted to sign in to your GitHub account to authorize the extension. After installation, the VSIX file can be deleted.
+1. Download the VSIX file for the GitHub Copilot Chat extension using the VS Code Marketplace API. Do this by running the following command on Taco (this will downloaded in the current working directory):
+```bash
+curl -L --compressed -o copilot-chat.vsix "https://marketplace.visualstudio.com/_apis/public/gallery/publishers/GitHub/vsextensions/copilot-chat/latest/vspackage"
+```
+2. Install the VSIX file within your code-server instance. To do this, navigate to the Extensions tab, click the three-dot menu at the top, and select "Install from VSIX...". Then, navigate to the location of the VSIX file you just downloaded and select it. You will then be prompted to sign in to your GitHub account to authorize the extension. After installation, the VSIX file can be deleted.
+
+NOTE: Sometimes, the latest release of the GitHub Copilot Chat extension may not yet be compatible with code-server. If you encounter this error, try downloading an earlier version of the extension. You can visit the [VS Code Marketplace page for GitHub Copilot Chat](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot-chat) to get the latest version; modify the download URL with a slightly earlier version (replace `latest` in the URL with a minor version earlier). So for example, if the latest version is `0.37.(something)`, try downloading `0.36.0` instead. This would yield the following link for the `curl` command:
+
+`https://marketplace.visualstudio.com/_apis/public/gallery/publishers/GitHub/vsextensions/copilot-chat/0.36.0/vspackage`
+
+In case one minor version earlier still does not work, two prior minor versions certainly should. code-server releases pretty closely follow VS Code releases.
