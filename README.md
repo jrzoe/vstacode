@@ -5,7 +5,7 @@ I initally made this repo as a resource for colleagues at BCM who had expressed 
 ## Topics
 
 - [Using VS Code on a compute cluster via code-server](./docs/code_server.md)
-- [Structuring your lab directory](./docs/lab_directory.md)
+- [Structuring your lab directory](./docs/structure_lab_dir.md)
 - [Source-controlled collaboration on big data projects](./docs/team_source_control.md)
 - [Backends and frontends for big data in R and Python](./docs/backends_frontends.md)
 
