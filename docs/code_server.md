@@ -25,7 +25,7 @@ srun -p interactive -t 5-00:00:00 -c 2 --mem=8G --job-name vscode --pty bash
 
 Now, you can copy the bash script `../run_vsc_sing.sh` to the cluster. There are three places you need to modify:
 
-1. Set `ipnport` to a port number of your choosing that is not currently in use. The file listing ports currently in use can be found within on Teams at MHGCP Users Group > "General" channel > "Shared" tab > ports_being_used_by_people.xlsx.
+1. Set `ipnport` to a port number of your choosing that is not currently in use; aim for a number in the range of 8000-9999. The file listing ports currently in use can be found within on Teams at MHGCP Users Group > "General" channel > "Shared" tab > ports_being_used_by_people.xlsx.
 
 2. Mount the path(s) you want to access within your container, replacing `/your/path/here`. Likely, this will be your lab's base storage path. If the mount point is instead a subdirectory, be sure to also mount your home directory and tmp directory (can be done with the environment variables `$HOME` and `$TMPDIR`, respectively).
 
