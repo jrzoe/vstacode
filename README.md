@@ -8,13 +8,12 @@ I initally made this repo as a resource for colleagues at BCM who had expressed 
 - [Structuring your lab directory](./docs/structure_lab_dir.md)
 - [Source-controlled collaboration on big data projects](./docs/team_source_control.md)
 - [Backends and frontends for big data in R and Python](./docs/backends_frontends.md)
+- [Working with R in code-server](./docs/working_with_R.md)
 
 ## TODO
 
 Some things I'll add to this repo:
 
 - Adding aliases for tunneling command rather than copying/pasting them (helpful if the command gets lost in your terminal history).
-- Helpful tips on config for code-server
-- Working with R environments on Taco and within code-server
 
 Please submit an issue or PR if you have suggestions or contributions! I'm only speaking from the limited experience I've had, so I'm sure there are many more helpful tips out there.
