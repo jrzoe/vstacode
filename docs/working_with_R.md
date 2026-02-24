@@ -15,7 +15,9 @@ When downloading R packages with micromamba, it is best to first check if the pa
 
 ## Code-server with micromamba environments
 
-I often have one micromamba environment that I use for R work in general (before a project coalesces enough to warrant its own environment). Let's say you want to set up something similar to use within code-server. (*This first step doesn't need to be done within code-server, but can be*). [Install micromamba](https://mamba.readthedocs.io/en/latest/installation/micromamba-installation.html), then create an environment with R and some common packages:
+The general idea is that for interactive work, we want to be able to specify the R version (and associated packages) being used, all while having some nice syntax highliting, code completions, workspace monitoring, and plot viewing support.
+
+I have one micromamba environment that I use for R work in general (before a project coalesces enough to warrant its own environment). Let's say you want to set up something similar to use within code-server. (*This first step doesn't need to be done within code-server, but can be*). [Install micromamba](https://mamba.readthedocs.io/en/latest/installation/micromamba-installation.html), then create an environment with R and some common packages:
 
 ```bash
 micromamba create -n r-env r-base r-tidyverse r-data.table r-languageserver r-httpgd
@@ -27,9 +29,11 @@ Of note, the last two packages (`r-languageserver` and `r-httpgd`) are needed fo
 
 Because Singularity will source your `.bashrc` on startup, `micromamba` will be ready to go whenever you start code-server. Open a terminal and activate your new environment. 
 
-To get some nice features like R syntax highlighting, environment monitoring, and plot viewing in code-server, you need to install an extension and do some light configuration:
+Now to get the nice features mentioned above, you need to install an extension and do some light configuration:
 
-1. From the "Extensions" tab in code-server, install the [R Extension](https://marketplace.visualstudio.com/items?itemName=REditorSupport.r). This is what provides many helpful features like syntax highlighting, environment monitoring, and plot viewing. More on the features [here](https://code.visualstudio.com/docs/languages/r).
+### Install and configure R Extension
+
+1. From the "Extensions" tab in code-server, install the [R Extension](https://marketplace.visualstudio.com/items?itemName=REditorSupport.r). This is what provides many helpful features like syntax highlighting and linting, workspace monitoring, and plot viewing. More on the features [here](https://code.visualstudio.com/docs/languages/r).
 2. Edit some settings for use with this extension. The following can be pasted into your `settings.json` (editing paths if necessary), accessible from the command pane (<kbd>F1</kbd>) and typing "Preferences: Open User Settings (JSON)". You can also edit these in the settings GUI if you prefer, the JSON was just easier to share here.
     ```json
     {
@@ -46,8 +50,9 @@ To get some nice features like R syntax highlighting, environment monitoring, an
     - `r.libPaths`: This tells R where to look for installed R packages when pulling up package information in the R extension. This should at least include the path for the environment entered above. However, if you are working on another project that has packages not included in the one above, you will need to add it to the list here as well. These paths don't need to be removed or changed when switching micromamba environments, as R will only look in the specified paths for packages when needed.
     - `r.alwaysUseActiveTerminal`: This setting makes it so that when you run R code from the editor, it will always run in the currently active terminal. This is important, as it means that if you activate a micromamba environment in a terminal, any R code you run from the editor will use that environment rather than the static path provided above.
     - `r.plot.useHttpgd`: This setting enables the use of the `httpgd` package for rendering plots within code-server, which works a bit better than the default method.
+3. Place the `../.Rprofile` dotfile into your home directory (or append the text found therein to yours if you already have one). This file will be read upon starting R, and it'll enable the R extension to automatically attach to your R workspace upon starting the REPL.
 
-### Optional
+### Optional - radian
 
 Rather than use the base R REPL, a much nicer alternative is `radian`. This provides syntax highlighting and autocompletion in the terminal itself. It also allows you to send highlighted chunks of code (with multiple commands) to the REPL rather than having to send individual commands manually. You simply have to install it in your micromamba environment, then use `radian` instead of `R` to start the REPL.
 
@@ -57,23 +62,36 @@ To enable sending chunks of code to the REPL from the editor, you will also need
 {
     "r.bracketedPaste": true,
 }
-``` 
+```
+
+### Summary
+
+So, for your interactive work, you will start your environment, then start the REPL. When editing scripts, keyboard shortcuts (e.g. <kbd>Cmd</kbd> + <kbd>Enter</kbd>) will route code to your active REPL.
+
+```
+micromamba activate r-env
+
+radian # or R
+```
+
+If you simply want to execute a script, just execute with `Rscript` from the command line.
 
 ### Using several R environments
 
-So, when working with multiple R envioronments, you activate the desired micromamba environment in a terminal before running any R code. Code can be sent to the REPL (with <kbd>Cmd</kbd> + <kbd>Enter</kbd>) or run as a script from the command line. Very easy!
-
-As mentioned above, you may need to add the library paths for each micromamba environment you use to the `r.libPaths` setting in order for the R extension to find the packages installed in those environments. However, this only needs to be done once, and you can leave all of the paths in there permanently. They will only be used to pull up package information when calling `help()`, for example.
+As mentioned above in the config section, you may need to add the library paths for each micromamba environment you use to the `r.libPaths` setting in order for the R extension to find the packages installed in those environments. However, this only needs to be done once, and you can leave all of the paths in there permanently. They will only be used to pull up package information when calling `help()`, for example.
 
 ## Code-server with system-level R
 
-If you want to continue using a system-level R installation rather than micromamba, I think the following will be necessary (I haven't tested this myself). First, add the path to the system-level R installation to your PATH environment variable in your `.bashrc` (or equivalent). For example:
+If you want to continue using a system-level R installation rather than micromamba, I think the following will be necessary (I haven't tested this myself). 
+
+First, add the path to the system-level R installation to your PATH environment variable in your `.bashrc` (or equivalent). For example:
 
 ```bash
 export PATH=/path/to/system/R/bin:$PATH
 ```
 
-Next, install the R extension in code-server as described above. With this setup, I don't think specifying paths in the code-server settings is necessary. The R extension should be able to find the system-level R installation automatically. So only the following settings should be needed (even the first one may be unnecessary, unless you plan on using multiple system-level R installations):
+Second, install the R extension in code-server as described above. 
+- With this setup, I don't think specifying paths in the code-server settings is necessary. The R extension should be able to find the system-level R installation automatically. So only the following settings should be needed (even the first one may be unnecessary, unless you plan on using multiple system-level R installations):
 
 ```json
 {
@@ -81,5 +99,5 @@ Next, install the R extension in code-server as described above. With this setup
     "r.plot.useHttpgd": true,
 }
 ```
-
-Be sure to install the `httpgd` and `languageserver` packages in your system-level R installation for the extension. That should be all.
+- Add `../.Rprofile` to your home directory, like above.
+- Be sure to install the `httpgd` and `languageserver` packages in your system-level R installation for the extension.
