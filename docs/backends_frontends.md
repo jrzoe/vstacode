@@ -1,6 +1,6 @@
 # Backends and frontends for big data in R and Python
 
-When working with particularly large datasets, base R data frames and pandas in Python will become painfully slow. Furthermore, some tables are truly just too large to load into memory. While you *can* request very large amounts of memory on a slurm job (assuming you're on a compute cluster), it will likely take a very long time to be assigned and will steal away resources from other users. Fortunately, there are a number of high-performance backends that can drastically speed up your data wrangling and analysis, some of which also support out-of-memory workflows. I had known of a lot of these backends for a while, but I never wanted to put the time into learning their own APIs (I wanted to use DuckDB, but I didn't know how to make SQL queries). Fortunately, I discovered there some great frontends that allow you to use these backends with a single API. No more learning multiple syntaxes for a single problem that you will then forget!
+When working with particularly large datasets, base R data frames and pandas in Python will become painfully slow. Furthermore, some tables are truly just too large to load into memory. While you *can* request very large amounts of memory on a slurm job (assuming you're on a compute cluster), it will likely take a very long time to be assigned and will steal away resources from other users. Fortunately, there are a number of high-performance backends that can drastically speed up data wrangling and analysis, some of which also support out-of-memory workflows. I had known of a lot of these backends for a while, but I never wanted to put the time into learning their own syntax (I wanted to use DuckDB, but I didn't know how to make SQL queries). Fortunately, there are some great frontends that allow you to use these backends with a single API. No more learning multiple syntaxes for a single problem that you will then forget!
 
 I'll outline some really helpful backends for R and Python, followed by a frontend for each language that allows you to use a single API across multiple them.
 
@@ -12,7 +12,7 @@ I'll outline some really helpful backends for R and Python, followed by a fronte
 
 ### polars (Python)
 
-[Polars](https://pola.rs/) is a fast DataFrame library for Python, written in Rust. Like data.table in R, polars is designed for high-performance in-memory data manipulation. It supports parallelization natively, unlike Pandas. Polars also offers a lazy evaluation mode, which optimizes query execution before running. If pandas is slowing you down, polars is a worthy alternative. But again, most people are using Pandas, so it can be a barrier to collaboration if others aren't familiar with the syntax.
+[Polars](https://pola.rs/) is a fast DataFrame library for Python, written in Rust. polars allows high-performance in-memory data manipulation like R data.table. It supports parallelization natively, unlike Pandas. Polars also offers a lazy evaluation mode, which optimizes query execution before running. If pandas is slowing you down, polars is a worthy alternative. But again, most people are using Pandas, so it can be a barrier to collaboration if others aren't familiar with the syntax.
 
 ## Language-agnostic backends
 
@@ -26,7 +26,7 @@ I'll outline some really helpful backends for R and Python, followed by a fronte
 
 ## Frontends for backend-agnostic workflows
 
-While these backends offer tremendous performance benefits, learning a new syntax for each is a huge barrier. I find staying fresh on Python and R syntax generally is more than enough work; learning multiple new APIs for data manipulation/transformation backends in each isn't an option. However, each can offer quite a lot depending on the task, so finding a way to use them easily would be nice. Fortunately, there are frontends that let you use a single, familiar API while leveraging different backends under the hood.
+While these backends offer tremendous performance benefits, learning a new syntax for each is a barrier. I find staying fresh on Python and R syntax for the most common data analysis packages generally is more than enough work; learning multiple new APIs for data manipulation/transformation backends wasn't feasible for me. However, each can offer quite a lot depending on the task, so finding a way to use them easily would be nice. Fortunately, there are frontends that let you use a single, familiar API while leveraging different backends under the hood.
 
 I think a big point to watch out for with frontends is that they stay in active development and are widely used. If not, you may find yourself stuck with a frontend that doesn't support the latest features of a backend you want to use, or worse, becomes unmaintained. Fortunately, the two I mention below are quite active, lots of stars on GitHub and are frequently updated. They seem to be the most popular options in their respective languages.
 
@@ -42,4 +42,4 @@ This means you can write your code once in dplyr and switch backends depending o
 
 ### narwhals (Python)
 
-[Narwhals](https://github.com/narwhals-dev/narwhals) is a lightweight Python library that provides a unified API across multiple DataFrame backends, including pandas, polars, arrow, and others. The goal is to write code once and have it run efficiently on whichever backend you choose, functioning similarly to the three pacakges I mentioned above for R. Of note, I don't think narwhals fully supports DuckDB yet, but arrow should have you covered for out-of-memory workflows.
+[Narwhals](https://github.com/narwhals-dev/narwhals) is a lightweight Python library that provides a unified API across multiple DataFrame backends, including pandas, polars, arrow, and others. The goal is to write code once and have it run efficiently on whichever backend you choose, functioning similarly to the three pacakges I mentioned above for R. Of note, it uses a subset of polars syntax, so if you use polars for in-memory processes, you can simply load narwhals and use the same syntax.
